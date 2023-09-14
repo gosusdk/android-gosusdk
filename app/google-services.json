@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "385933754125",
+    "project_id": "gamesdk-298f3",
+    "storage_bucket": "gamesdk-298f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385933754125:android:34c66e2cd78c1678effa44",
+        "android_client_info": {
+          "package_name": "com.gosu.gosudemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385933754125-qq5sl8de9b9hb42b8o2f3097i85uvbji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP2wuB6tKafclatIOvxcmcZ2ba-6CLm-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385933754125-qq5sl8de9b9hb42b8o2f3097i85uvbji.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

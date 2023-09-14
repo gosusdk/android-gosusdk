@@ -1,0 +1,1 @@
+gradlew :gosusdk:assembleRelease
