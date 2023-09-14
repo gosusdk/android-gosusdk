@@ -9,3 +9,4 @@ captures
 .cxx
 app/build
 app/release
+build.txt
