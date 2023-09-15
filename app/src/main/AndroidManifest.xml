@@ -67,6 +67,8 @@
         <meta-data
             android:name="com.facebook.sdk.ClientToken"
             android:value="@string/facebook_client_token" />
+
+        <!-- ============ Google/Facebook Activity ============== -->
         <activity
             android:name="com.game.gsoauth.GoogleManager$SignInActivity"
             android:screenOrientation="fullSensor"

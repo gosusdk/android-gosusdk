@@ -41,7 +41,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
     public void initView() {
         GosuSDK.getInstance().setOauthListener(this);
+        GosuSDK.getInstance().setOauthListener(new IGameOauthListener() {
+            @Override
+            public void onLoginSuccess(String s, String s1, String s2) {
+
+            }
+
+            @Override
+            public void onLogout() {
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+
+            @Override
+            public void onDeleteAccount(String s) {
+
+            }
+        });
         GosuSDK.getInstance().initSdk(this);
+        GosuSDK.getInstance().onlyInitSdk(this);
         for(Map.Entry<Integer, Integer> entry : buttonMap.entrySet()) {
             findViewById(entry.getKey()).setOnClickListener(this);
         }
