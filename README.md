@@ -186,7 +186,7 @@ USAGE GOSU LOGIN SDK
 * Sign in with Google: You send SHA-1 us [click here](https://developers.google.com/android/guides/client-auth)
 * Sign in with Facebook: You send hash key us [more here](https://developers.facebook.com/docs/facebook-login/android)
 
-2. GosuSDK Basic Functions
+### 2. GosuSDK Basic Functions
 ---
 ```java
 //init SDK and show SignIn
