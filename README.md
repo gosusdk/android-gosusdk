@@ -74,7 +74,7 @@ app/
   "airb_app_token": "d878da2af447440385fe9a4fe37b06a0"
 }
 ```
-#### 4. Edit Your Resources and Manifest
+#### 3. Edit Your Resources and Manifest
 **- Open the /app/res/values/strings.xml file.**
 ```xml
 <string name="facebook_app_id">1234</string>
@@ -198,7 +198,7 @@ GosuSDK.getInstance().showSignIn();
 GosuSDK.getInstance().logout();
 GosuSDK.getInstance().deleteAccount();
 ```
-3. Paying on Google Play with GosuSDK
+### 3. Make payments through Google Billing IAP for in-app purchases.
 ---
 ```java
 public void call_billing()
