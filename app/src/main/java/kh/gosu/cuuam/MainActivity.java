@@ -3,33 +3,24 @@ package kh.gosu.cuuam;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
-
 import com.game.gsdk.inteface.IGameOauthListener;
 import com.game.gsdk.inteface.IGamePaymentListener;
-import com.game.gsdk.inteface.OnSingleClickListener;
 import com.game.gsdk.object.GameItemIAPObject;
 import com.game.gsdk.utils.GameConstant;
 import com.game.gsdk.utils.GosuSDK;
 import com.game.gstracking.GTrackingManager;
-
 import org.json.JSONObject;
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class MainActivity extends AppCompatActivity implements IGameOauthListener {
-    private Button btnDangNhap;
-    private Button btnTTTK;
-    private Button btnDSITEM;
-    private Button btnTTITEM1;
-    private Button btnDeleteAccount;
-    private Button btnDangXuat;
-
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, IGameOauthListener {
     Activity mActivity;
 
     @Override
@@ -37,11 +28,86 @@ public class MainActivity extends AppCompatActivity implements IGameOauthListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        Context context = getApplicationContext();
         mActivity = this;
-        Utility.printKeyHash(this);
+    }
+    HashMap<Integer, Integer> buttonMap = new HashMap<Integer, Integer>() {
+        {
+            put(R.id.btnDangNhap, 0);
+            put(R.id.btnDSITEM, 1);
+            put(R.id.btnDeleteAccount, 1);
+            put(R.id.btnTTITEM1, 1);
+            put(R.id.btnDangXuat, 1);
+        }
+    };
+    public void initView() {
         GosuSDK.getInstance().setOauthListener(this);
         GosuSDK.getInstance().initSdk(this);
+        for(Map.Entry<Integer, Integer> entry : buttonMap.entrySet()) {
+            findViewById(entry.getKey()).setOnClickListener(this);
+        }
+        setVisibleButton(false /* isLogedIn */);
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnDSITEM:
+                String productList = "";
+                for(String productId : GameConstant.iap_product_ids) {
+                    if (!productList.isEmpty()) productList += "\n";
+                    productList += productId;
+                }
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setTitle("Product List");
+                alert.setMessage(productList);
+                alert.create();
+                alert.show();
+                break;
+            case R.id.btnDangXuat:
+                GosuSDK.getInstance().logout();
+                break;
+            case R.id.btnDeleteAccount:
+                GosuSDK.getInstance().deleteAccount();
+                break;
+            case R.id.btnTTITEM1:
+                String productID = "com.flashpoint.nemo.100kc"; //GameConstant.iap_product_ids.get(0);
+                String mProductName = "Mua gói 100KNB";
+                String amount = "22000";
+                String orderID = Utility.getInstance().randomString(10); //random string your
+                String serverID       = "S1";
+                String characterID    = "Character_ID";
+                String extraInfo    = "";
+
+                GameItemIAPObject gosuItemIAPObject = new GameItemIAPObject(
+                        productID,
+                        mProductName,
+                        orderID,
+                        amount,
+                        serverID,
+                        characterID,
+                        extraInfo
+                );
+                GosuSDK.getInstance().showIAP(gosuItemIAPObject, new IGamePaymentListener() {
+                    @Override
+                    public void onPaymentSuccess(String message) {
+                        showMessage(message);
+                    }
+
+                    @Override
+                    public void onPaymentError(String message) {
+                        showMessage(message);
+                    }
+                });
+                break;
+            case R.id.btnDangNhap:
+            default:
+                GosuSDK.getInstance().showSignIn();
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     protected void callTrackingExample()
@@ -72,152 +138,53 @@ public class MainActivity extends AppCompatActivity implements IGameOauthListene
         GTrackingManager.getInstance().trackingEvent("level_20", "{\"customer_id\":\"12345\"}");
     }
 
-    public void initView() {
-        btnDangNhap = findViewById(R.id.btnDangNhap);
-        btnDangNhap.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View var1) {
-                GosuSDK.getInstance().showSignIn();
-            }
-        });
-
-
-        btnDSITEM = (Button) findViewById(R.id.btnDSITEM);
-        btnDSITEM.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View view) {
-                for(int i = 0; i < GameConstant.iap_product_ids.size(); i++){
-                    Log.d("TAG_ITEM", GameConstant.iap_product_ids.get(i)+"");
-                }
-            }
-        });
-
-
-        btnDeleteAccount = (Button) findViewById(R.id.btnDeleteAccount);
-        btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GosuSDK.getInstance().deleteAccount();
-            }
-        });
-
-
-
-        btnTTITEM1 = (Button) findViewById(R.id.btnTTITEM1);
-        btnTTITEM1.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View var1) {
-
-                if(GameConstant.iap_product_ids.size() <= 0) return;
-
-                String productID = "com.flashpoint.nemo.100kc"; //GameConstant.iap_product_ids.get(0);
-                String mProductName = "Mua gói 100KNB";
-                String amount = "22000";
-                String orderID = randomString(10); //random string your
-                String serverID       = "S1";
-                String characterID    = "Character_ID";
-                String extraInfo    = "";
-
-                GameItemIAPObject gosuItemIAPObject = new GameItemIAPObject(productID, mProductName, orderID, amount, serverID, characterID, extraInfo);
-
-
-                GosuSDK.getInstance().showIAP(gosuItemIAPObject, new IGamePaymentListener() {
-                    @Override
-                    public void onPaymentSuccess(String message) {
-                        Log.d("T123", message);
-                    }
-
-                    @Override
-                    public void onPaymentError(String message) {
-                        Log.d("T123", message);
-
-                    }
-                });
-            }
-        });
-
-        btnDangXuat = (Button) findViewById(R.id.btnDangXuat);
-        btnDangXuat.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View var1) {
-                GosuSDK.getInstance().logout();
-            }
-        });
-
-        btnDangNhap.setVisibility(View.VISIBLE);
-        btnDSITEM.setVisibility(View.GONE);
-        btnTTITEM1.setVisibility(View.GONE);
-        btnDangXuat.setVisibility(View.GONE);
-        btnDeleteAccount.setVisibility(View.GONE);
-
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        GosuSDK.getInstance().onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-
-    private String randomString(int n){
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "0123456789"
-                + "abcdefghijklmnopqrstuvxyz";
-
-        // create StringBuffer size of AlphaNumericString
-        StringBuilder sb = new StringBuilder(n);
-
-        for (int i = 0; i < n; i++) {
-
-            // generate a random number between
-            // 0 to AlphaNumericString variable length
-            int index
-                    = (int)(AlphaNumericString.length()
-                    * Math.random());
-
-            // add Character one by one in end of sb
-            sb.append(AlphaNumericString
-                    .charAt(index));
-        }
-
-        return sb.toString();
-    }
-
     @Override
     public void onLoginSuccess(String UserId, String UserName, String accesstoken) {
-        btnDangNhap.setVisibility(View.GONE);
-        btnDSITEM.setVisibility(View.VISIBLE);
-        btnTTITEM1.setVisibility(View.VISIBLE);
-        btnDangXuat.setVisibility(View.VISIBLE);
-        btnDeleteAccount.setVisibility(View.VISIBLE);
+        setVisibleButton(true /* isLogedIn */);
         callTrackingExample();
+        showMessage("Login success: " + UserName);
     }
 
     @Override
     public void onLogout() {
-        btnDangNhap.setVisibility(View.GONE);
-        btnDSITEM.setVisibility(View.GONE);
-        btnTTITEM1.setVisibility(View.GONE);
-        btnDangXuat.setVisibility(View.GONE);
-        btnDeleteAccount.setVisibility(View.GONE);
+        setVisibleButton(false /* isLogedIn */);
+        showMessage("LogOut success: ");
     }
 
     @Override
     public void onError() {
-
+        showMessage("OnError");
     }
 
     @Override
     public void onDeleteAccount(String status) {
+        showMessage("Account deleted successfully!");
+    }
+    public void showMessage(String message)
+    {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                CharSequence text = "Account deleted successfully!";
-                int duration = Toast.LENGTH_SHORT;
+                CharSequence text = message;
+                int duration = Toast.LENGTH_LONG;
                 Toast toast = Toast.makeText(mActivity /* MyActivity */, text, duration);
                 toast.show();
             }
         });
+    }
+
+    public void setVisibleButton(boolean isLoggedIn)
+    {
+        try {
+            int value = isLoggedIn ? 1 : 0;
+            for(Map.Entry<Integer, Integer> entry : buttonMap.entrySet()) {
+                if (entry.getValue() == value) {
+                    findViewById(entry.getKey()).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(entry.getKey()).setVisibility(View.GONE);
+                }
+            }
+        } catch (Exception ignored) {
+        }
     }
 }
