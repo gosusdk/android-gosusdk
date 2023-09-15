@@ -60,13 +60,13 @@ dependencies {
     implementation "io.airbridge:sdk-android:2.22.0"
 }
 ```	
-**-Move config file (google-services.json) into the module (app-level) root directory of your app.**
+####-Move config file (google-services.json) into the module (app-level) root directory of your app.
 ```
 app/
   google-services.json
 ```
 
-**- Add gosu-service.json file to folder main/assets**
+####- Add gosu-service.json file to folder main/assets
 ```json
 {
   "client_id": "",
