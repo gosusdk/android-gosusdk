@@ -10,7 +10,7 @@ INSTALLATION
 
 **Download the official version: [click here](https://github.com/gosusdk/android-gosusdk/releases)**
 
-#### 1. In your root-level (project-level) Gradle file `<project>/build.gradle`, add more plugins dependency to your `build.gradle` file:
+### 1. In your root-level (project-level) Gradle file `<project>/build.gradle`, add more plugins dependency to your `build.gradle` file:
 
 ```gradle
 allprojects {
@@ -26,7 +26,7 @@ dependencies {
     classpath 'com.google.gms:google-services:4.3.15'
 }
 ```	
-#### 2. In your module (app-level) Gradle file `<project>/<app-module>/build.gradle`, add more plugins dependency to your `build.gradle` file:
+### 2. In your module (app-level) Gradle file `<project>/<app-module>/build.gradle`, add more plugins dependency to your `build.gradle` file:
 
 ```gradle
 // google service plugin (use firebase tracking)
@@ -60,13 +60,13 @@ dependencies {
     implementation "io.airbridge:sdk-android:2.22.0"
 }
 ```	
-####-Move config file (google-services.json) into the module (app-level) root directory of your app.
+##### - Move config file (google-services.json) into the module (app-level) root directory of your app.
 ```
 app/
   google-services.json
 ```
 
-####- Add gosu-service.json file to folder main/assets
+##### - Add gosu-service.json file to folder main/assets
 ```json
 {
   "client_id": "",
@@ -74,14 +74,14 @@ app/
   "airb_app_token": "d878da2af447440385fe9a4fe37b06a0"
 }
 ```
-#### 3. Edit Your Resources and Manifest
-**- Open the /app/res/values/strings.xml file.**
+### 3. Edit Your Resources and Manifest
+##### - Open the /app/res/values/strings.xml file.
 ```xml
 <string name="facebook_app_id">1234</string>
 <string name="fb_login_protocol_scheme">fb1234</string>
 <string name="facebook_client_token">56789</string>
 ```
-**-Open the /app/manifest/AndroidManifest.xml file.**
+##### -Open the /app/manifest/AndroidManifest.xml file.
 ```xml
 <!-- ============ PERMISSION ============== -->
 <uses-permission android:name="android.permission.INTERNET" />
@@ -183,8 +183,9 @@ USAGE GOSU LOGIN SDK
     }
 ```
 **NOTE**
-* Sign in with Google: You send SHA-1 us [click here](https://developers.google.com/android/guides/client-auth)
-* Sign in with Facebook: You send hash key us [more here](https://developers.facebook.com/docs/facebook-login/android)
+* intSDK: Please provide us with the SHA-1 code, from the following documentation. [click here](https://developers.google.com/android/guides/client-auth)
+* Sign in with Google: Please provide us with the SHA-1 code, from the following documentation. [click here](https://developers.google.com/android/guides/client-auth)
+* Sign in with Facebook: Please provide us with the hashkey code, from the following documentation. [more here](https://developers.facebook.com/docs/facebook-login/android)
 
 ### 2. GosuSDK Basic Functions
 ---
