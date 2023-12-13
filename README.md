@@ -128,6 +128,13 @@ app/
     android:screenOrientation="fullSensor"
     tools:ignore="Instantiatable">
 </activity>
+<service
+    android:name="com.game.gstracking.GFirebaseMessagingService"
+    android:exported="false">
+    <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT" />
+    </intent-filter>
+</service>
 ```
 USAGE GOSU LOGIN SDK
 --------------------
