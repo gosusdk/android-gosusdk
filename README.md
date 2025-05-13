@@ -23,7 +23,10 @@ allprojects {
 dependencies {
     // ...
     // google service (use firebase tracking)
-    classpath 'com.google.gms:google-services:4.3.15'
+    classpath 'com.android.tools.build:gradle:7.4.2'
+    classpath 'com.google.gms:google-services:4.3.3'
+    classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+    classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
 }
 ```	
 ### 2. In your module (app-level) Gradle file `<project>/<app-module>/build.gradle`, add more plugins dependency to your `build.gradle` file:
@@ -31,6 +34,7 @@ dependencies {
 ```gradle
 // google service plugin (use firebase tracking)
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 dependencies {
     // ...
@@ -51,6 +55,7 @@ dependencies {
     implementation 'com.google.guava:guava:31.1-android'
     implementation 'com.google.firebase:firebase-messaging:23.2.1'
     implementation 'com.google.firebase:firebase-analytics'
+    implementation("com.google.firebase:firebase-crashlytics")
     // GRPC Deps
     implementation 'io.grpc:grpc-okhttp:1.57.1'
     implementation 'io.grpc:grpc-protobuf-lite:1.57.1'
