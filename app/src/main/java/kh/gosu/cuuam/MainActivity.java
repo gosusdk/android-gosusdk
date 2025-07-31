@@ -71,59 +71,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnDSITEM:
-                String productList = "";
-                for(String productId : GameConstant.iap_product_ids) {
-                    if (!productList.isEmpty()) productList += "\n";
-                    productList += productId;
+        if (v.getId() == R.id.btnDSITEM) {
+            String productList = "";
+            for(String productId : GameConstant.iap_product_ids) {
+                if (!productList.isEmpty()) productList += "\n";
+                productList += productId;
+            }
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Product List");
+            alert.setMessage(productList);
+            alert.create();
+            alert.show();
+        } else if (v.getId() == R.id.btnDangXuat) {
+            GosuSDK.getInstance().logout();
+        } else if (v.getId() == R.id.btnDeleteAccount) {
+            GosuSDK.getInstance().deleteAccount();
+        } else if (v.getId() == R.id.btnTTITEM1) {
+            String productID = "com.flashpoint.nemo.100kc"; //GameConstant.iap_product_ids.get(0);
+            String mProductName = "Mua gói 100KNB";
+            String amount = "22000";
+            String orderID = Utility.getInstance().randomString(10); //random string your
+            String serverID       = "S1";
+            String characterID    = "Character_ID";
+            String extraInfo    = "";
+
+            GameItemIAPObject gosuItemIAPObject = new GameItemIAPObject(
+                    productID,
+                    mProductName,
+                    orderID,
+                    amount,
+                    serverID,
+                    characterID,
+                    extraInfo
+            );
+            GosuSDK.getInstance().showIAP(gosuItemIAPObject, new IGamePaymentListener() {
+                @Override
+                public void onPaymentSuccess(String message) {
+                    showMessage(message);
                 }
-                AlertDialog.Builder alert = new AlertDialog.Builder(this);
-                alert.setTitle("Product List");
-                alert.setMessage(productList);
-                alert.create();
-                alert.show();
-                break;
-            case R.id.btnDangXuat:
-                GosuSDK.getInstance().logout();
-                break;
-            case R.id.btnDeleteAccount:
-                GosuSDK.getInstance().deleteAccount();
-                break;
-            case R.id.btnTTITEM1:
-                String productID = "com.flashpoint.nemo.100kc"; //GameConstant.iap_product_ids.get(0);
-                String mProductName = "Mua gói 100KNB";
-                String amount = "22000";
-                String orderID = Utility.getInstance().randomString(10); //random string your
-                String serverID       = "S1";
-                String characterID    = "Character_ID";
-                String extraInfo    = "";
 
-                GameItemIAPObject gosuItemIAPObject = new GameItemIAPObject(
-                        productID,
-                        mProductName,
-                        orderID,
-                        amount,
-                        serverID,
-                        characterID,
-                        extraInfo
-                );
-                GosuSDK.getInstance().showIAP(gosuItemIAPObject, new IGamePaymentListener() {
-                    @Override
-                    public void onPaymentSuccess(String message) {
-                        showMessage(message);
-                    }
-
-                    @Override
-                    public void onPaymentError(String message) {
-                        showMessage(message);
-                    }
-                });
-                break;
-            case R.id.btnDangNhap:
-            default:
-                GosuSDK.getInstance().showSignIn();
-                break;
+                @Override
+                public void onPaymentError(String message) {
+                    showMessage(message);
+                }
+            });
+        } else if (v.getId() == R.id.btnDangNhap) {
+            GosuSDK.getInstance().showSignIn();
+        } else {
+            GosuSDK.getInstance().showSignIn();
         }
     }
 

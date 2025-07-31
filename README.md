@@ -23,10 +23,10 @@ allprojects {
 dependencies {
     // ...
     // google service (use firebase tracking)
-    classpath 'com.android.tools.build:gradle:7.4.2'
-    classpath 'com.google.gms:google-services:4.3.3'
+    classpath 'com.android.tools.build:gradle:8.7.0'
+    classpath 'com.google.gms:google-services:4.4.2'
     classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-    classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
+    classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'
 }
 ```	
 ### 2. In your module (app-level) Gradle file `<project>/<app-module>/build.gradle`, add more plugins dependency to your `build.gradle` file:
@@ -39,30 +39,30 @@ apply plugin: 'com.google.firebase.crashlytics'
 dependencies {
     // ...
     // GosuSDK
-    implementation files('libs/gosusdk.aar')
+    implementation files('libs/gosusdk-v1.0.6.aar')
     //for in app billing
-    implementation 'com.android.billingclient:billing:6.0.1'
+    implementation 'com.android.billingclient:billing:7.1.1'
     //for appsflyer
-    implementation 'com.appsflyer:af-android-sdk:6.3.2'
+    implementation 'com.appsflyer:af-android-sdk:6.15.0'
     implementation 'com.android.installreferrer:installreferrer:2.2'
     //for showLogin facebook sdk
-    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
+    implementation 'com.facebook.android:facebook-android-sdk:17.0.2'
     //for sigin GG SDK
-    implementation 'com.google.android.gms:play-services-auth:20.6.0'
+    implementation 'com.google.android.gms:play-services-auth:21.2.0'
     //for firebase
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:31.1.0')
-    implementation 'com.google.guava:guava:31.1-android'
-    implementation 'com.google.firebase:firebase-messaging:23.2.1'
+    implementation platform('com.google.firebase:firebase-bom:33.5.1')
+    implementation 'com.google.guava:guava:33.3.1-android'
+    implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-analytics'
     implementation("com.google.firebase:firebase-crashlytics")
     // GRPC Deps
-    implementation 'io.grpc:grpc-okhttp:1.57.1'
-    implementation 'io.grpc:grpc-protobuf-lite:1.57.1'
-    implementation 'io.grpc:grpc-stub:1.57.1'
+    implementation 'io.grpc:grpc-okhttp:1.68.0'
+    implementation 'io.grpc:grpc-protobuf-lite:1.68.0'
+    implementation 'io.grpc:grpc-stub:1.68.0'
     compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
     //airbridge
-    implementation "io.airbridge:sdk-android:2.22.0"
+    implementation "io.airbridge:sdk-android:2.23.4"
 }
 ```	
 ##### - Move config file (google-services.json) into the module (app-level) root directory of your app.
