@@ -41,27 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
     public void initView() {
         GosuSDK.getInstance().setOauthListener(this);
-        GosuSDK.getInstance().setOauthListener(new IGameOauthListener() {
-            @Override
-            public void onLoginSuccess(String s, String s1, String s2) {
-
-            }
-
-            @Override
-            public void onLogout() {
-
-            }
-
-            @Override
-            public void onError() {
-
-            }
-
-            @Override
-            public void onDeleteAccount(String s) {
-
-            }
-        });
         GosuSDK.getInstance().initSdk(this);
         GosuSDK.getInstance().onlyInitSdk(this);
         for(Map.Entry<Integer, Integer> entry : buttonMap.entrySet()) {
@@ -129,30 +108,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void callTrackingExample()
     {
-        GTrackingManager.getInstance().trackingStartTrial();
-        GTrackingManager.getInstance().trackingTutorialCompleted();
-        GTrackingManager.getInstance().doneNRU(
-                "server_id",
-                "role_id",
-                "Role Name"
-        );
-        String abc = null;
-        GTrackingManager.getInstance().doneNRU(
-                abc,
-                abc,
-                abc
-        );
+        GTrackingManager.getInstance().createNewCharacter("server_test01", "role_test01", "role_name_test01");
+        GTrackingManager.getInstance().enterGame("user_idtest01", "role_test01", "role_name_test01", "server_test01");
+        GTrackingManager.getInstance().startTutorial("user_idtest01", "role_test01", "role_name_test01", "server_test01");
+        GTrackingManager.getInstance().completeTutorial("user_idtest01", "role_test01", "role_name_test01", "server_test01");
+        GTrackingManager.getInstance().checkout("order_test01", "pro_01", "1", "VND", "customer_test01");
+        GTrackingManager.getInstance().purchase("order_test01", "pro_01", "1", "VND", "customer_test01");
+        GTrackingManager.getInstance().levelUp("user_idtest01", "role_test01", 10);
+        GTrackingManager.getInstance().vipUp("user_idtest01", "role_test01", 3);
+        GTrackingManager.getInstance().useItem("user_idtest01", "role_test01", "item_test01", "itemid_test01", 1);
+        GTrackingManager.getInstance().trackActivityResult("user_idtest01", "role_test01", "item_test01", "activity_01", "Passed");
+        JSONObject object = new JSONObject();
         try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("user_id", "1");
-            GTrackingManager.getInstance().trackingEvent("level_20", jsonObject);
-        } catch (Exception ignored) {}
-
-        /* custom event */
-        GTrackingManager.getInstance().trackingEvent("level_20");
-        GTrackingManager.getInstance().trackingEvent("level_20", abc);
-        GTrackingManager.getInstance().trackingEvent("level_20", "{\"test\":\"abc\"}");
-        GTrackingManager.getInstance().trackingEvent("level_20", "{\"customer_id\":\"12345\"}");
+            object.put("key_1", "1234");
+            object.put("key_2", "test");
+        } catch (Exception e) {
+        }
+        GTrackingManager.getInstance().trackCustomEvent("event_custom_toantest", object);
     }
 
     @Override
