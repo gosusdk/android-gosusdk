@@ -10,6 +10,11 @@ GosuSDK for Android v1.1.0
 
 ## What's New in v1.1.0
 
+### 🆕 **Added New**
+- **ITS SDK Integration**: Brand new ITS SDK v1.1.1 integrated for enhanced analytics
+  - Advanced event tracking and user behavior analytics
+  - Real-time data collection and processing
+
 ### 🗑️ **Removed**
 - **Airbridge Integration**: Completely removed Airbridge SDK dependency for simplified integration
 - **AppsFlyer Integration**: Completely removed AppsFlyer SDK dependency for simplified integration
@@ -18,6 +23,7 @@ GosuSDK for Android v1.1.0
 - **SQLCipher Library**: Updated to v4.10.0 with 16KB page size compatibility
 - **Build Environment**: Updated to Gradle 8.7 and Android Gradle Plugin 8.5.1
 - **Google Policy Compliance**: Full support for new Google Play Store 16KB page size requirements
+- **ITS SDK**: Updated to latest v1.1.1 with enhanced analytics capabilities
 
 ### 🔧 **Enhanced**
 - **16KB Page Size Compatibility**: Added support for Android 15+ requirements
@@ -28,6 +34,7 @@ GosuSDK for Android v1.1.0
 ### 📋 **Configuration Updates**
 - **Gradle Properties**: Enhanced for 16KB page size compatibility
 - **Native Library Alignment**: Optimized for better performance and compatibility
+  
 ## Core Features
 ### 🔧 **System Requirements**
 - **Modern Build System**: Gradle 8.7, AGP 8.5.1, Java 17
@@ -342,23 +349,21 @@ public void call_billing()
 USAGE GOSU TRACKING SDK
 --------------------
 
+The SDK supports tracking in-app events with enhanced analytics capabilities (ITS SDK 1.1.1). To use it, you need to implement the `GTrackingManager` module. For detailed information, refer to the code example below.
+
 ```java
-GTrackingManager.getInstance().trackingStartTrial();
-GTrackingManager.getInstance().trackingTutorialCompleted();
-GTrackingManager.getInstance().doneNRU(
-        "server_id",
-        "role_id",
-        "Role Name"
-);
-/* custom event */
-GTrackingManager.getInstance().trackingEvent("level_20");
-GTrackingManager.getInstance().trackingEvent("level_20", "{\"customer_id\":\"1234\"}");
-/* example: 
-jsonContent = {"event": "event_name", "params": {"key": "value", "key2": "value2"} }
-*/
-JSONObject jsonContent = new JSONObject();
-jsonRole.put("character", "CharacterName");
-jsonRole.put("server", "ServerID");        
-GTrackingManager.getInstance().trackingEvent("event_name", jsonContent);
+// Basic tracking events
+GTrackingManager.getInstance().completeRegistration("User_id");
+GTrackingManager.getInstance().completeTutorial();
+
+// Gaming-specific events  
+GTrackingManager.getInstance().createNewCharacter("server_info", "char_id", "char_name");
+GTrackingManager.getInstance().enterGame("user_id", "char_id", "char_name", "server_info");
+GTrackingManager.getInstance().levelUp("char_id", "server_info", level);
+
+// Custom events
+JSONObject customData = new JSONObject();
+customData.put("key", "value");
+GTrackingManager.getInstance().trackCustomEvent("event_name", customData);
 ```
 For detailed information on tracking events, please refer to the [Tracking Guide](./TRACKING_GUIDE.md).
