@@ -9,11 +9,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import com.game.gsdk.inteface.IGameInitListener;
 import com.game.gsdk.inteface.IGameOauthListener;
 import com.game.gsdk.inteface.IGamePaymentListener;
 import com.game.gsdk.object.GameItemIAPObject;
 import com.game.gsdk.utils.GameConstant;
+import com.game.gsdk.utils.GameException;
 import com.game.gsdk.utils.GosuSDK;
+import com.game.gsdk.utils.SDKOptions;
 import com.game.gstracking.GTrackingManager;
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -41,8 +45,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
     public void initView() {
         GosuSDK.getInstance().setOauthListener(this);
-        GosuSDK.getInstance().initSdk(this);
-        GosuSDK.getInstance().onlyInitSdk(this);
+
+        //Upgrade v1.1.0 ->  v1.2.0
+        //GosuSDK.getInstance().initSdk(this);
+        //GosuSDK.getInstance().onlyInitSdk(this);
+        SDKOptions options = SDKOptions.builderWithDefaultOption().enableAppsflyer(true).enableAppsflyer(true).enableIts(true);
+        GosuSDK.getInstance().sdkInitialize(this, new IGameInitListener() {
+            @Override
+            public void onSuccess() {
+                // Handle SDKInit Success
+                Log.d("GosuSDK", "SDK Init Success");
+            }
+
+            @Override
+            public void onError(GameException e) {
+                // Handle SDKInit Error
+                Log.e("GosuSDK", "SDK Init Error: " + e.getMessage());
+
+            }
+        },options);
+
+
         for(Map.Entry<Integer, Integer> entry : buttonMap.entrySet()) {
             findViewById(entry.getKey()).setOnClickListener(this);
         }
@@ -52,10 +75,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v.getId() == R.id.btnDSITEM) {
             String productList = "";
-            for(String productId : GameConstant.iap_product_ids) {
-                if (!productList.isEmpty()) productList += "\n";
-                productList += productId;
-            }
+//            for(String productId : GameConstant.iap_product_ids) {
+//                if (!productList.isEmpty()) productList += "\n";
+//                productList += productId;
+//            }
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Product List");
             alert.setMessage(productList);
