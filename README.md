@@ -282,21 +282,21 @@ USAGE GOSU LOGIN SDK
             
             /* Configure SDK Options */
             SDKOptions options = new SDKOptions();
-            options.enableITS = true;         // Enable ITS tracking (default: true)
-            options.enableAppsFlyer = true;   // Enable AppsFlyer tracking (default: true)
-            options.enableFirebase = true;    // Enable Firebase tracking (default: true)
+            options.enableITS = true;         // Enable ITS tracking (default: false)
+            options.enableAppsFlyer = true;   // Enable AppsFlyer tracking (default: false)
+            options.enableFirebase = true;    // Enable Firebase tracking (default: false)
             
             /* Initialize GosuSDK with options */
-            GosuSDK.getInstance().sdkInitialize(this, options, new IGameInitListener() {
+            GosuSDK.getInstance().sdkInitialize(this, new IGameInitListener() {
                 @Override
-                public void onInitSuccess() {
+                public void onSuccess() {
                     // SDK initialized successfully
                 }
                 @Override
-                public void onInitError(String error) {
+                public void onError(GameException exception) {
                     // Handle initialization error
                 }
-            });
+            }, options);
         }
     }
 ```
@@ -309,16 +309,23 @@ USAGE GOSU LOGIN SDK
 ---
 ```java
 //SDK initialization (required before any other SDK calls)
+/* Configure SDK Options */
+SDKOptions options = new SDKOptions();
+options.enableITS = true;         // Enable ITS tracking (default: false)
+options.enableAppsFlyer = true;   // Enable AppsFlyer tracking (default: false)
+options.enableFirebase = true;    // Enable Firebase tracking (default: false)
+
+/* Initialize GosuSDK with options */
 GosuSDK.getInstance().sdkInitialize(this, new IGameInitListener() {
     @Override
-    public void onInitSuccess() {
-        // SDK ready - can now call other functions
+    public void onSuccess() {
+        // SDK initialized successfully
     }
     @Override
-    public void onInitError(String error) {
-        // Handle error
+    public void onError(GameException exception) {
+        // Handle initialization error
     }
-});
+}, options);
 
 //Show SignIn dialog (call after successful initialization)
 GosuSDK.getInstance().showSignIn();
@@ -335,12 +342,12 @@ GosuSDK.getInstance().deleteAccount();
 ```java
 public void call_billing()
 {
-    String productID = "com.flashpoint.nemo.100kc"; //GameConstant.iap_product_ids.get(0);
+    String productID    = "com.flashpoint.nemo.100kc"; //GameConstant.iap_product_ids.get(0);
     String mProductName = "Mua gói 100KNB";
-    String amount = "22000";
-    String orderID = Utility.getInstance().randomString(10); //random string your
-    String serverID       = "S1";
-    String characterID    = "Character_ID";
+    String amount       = "22000";
+    String orderID      = Utility.getInstance().randomString(10); //random string your
+    String serverID     = "S1";
+    String characterID  = "Character_ID";
     String extraInfo    = "";
 
     GameItemIAPObject gosuItemIAPObject = new GameItemIAPObject(
