@@ -1,4 +1,4 @@
-GosuSDK for Android v1.1.0
+GosuSDK for Android v1.2.0
 ========================
 
 **Latest Gaming SDK with Enhanced Features**
@@ -7,40 +7,41 @@ GosuSDK for Android v1.1.0
 * Billing & Payment
 * Event Tracking & Analytics
 * Android 15+ 16KB Page Size Compatibility
+* Configurable Third-Party Tracking (ITS, AppsFlyer, Firebase)
 
-## What's New in v1.1.0
+## What's New in v1.2.0
 
-### 🆕 **Added New**
-- **ITS SDK Integration**: Brand new ITS SDK v1.1.1 integrated for enhanced analytics
-  - Advanced event tracking and user behavior analytics
-  - Real-time data collection and processing
+### 🆕 **Added**
+- **AppsFlyer Integration Added**: AppsFlyer SDK with advanced event tracking and user behavior analytics
+- **SDKOptions Configuration**: New configuration class to enable or disable third-party tracking features (ITS, AppsFlyer, Firebase) during SDK initialization
+- **IGameInitListener Callback**: New callback interface for better initialization handling and error reporting
+- **Enhanced 16KB Page Size Support**: Improved native library (.so files) alignment for Android 15+ devices
+
+### 🔄 **Changed**
+- **⚠️ BREAKING CHANGE**: Renamed `initSdk()` to `sdkInitialize()` with IGameInitListener callback for improved initialization handling
+- **Build Configuration**: Updated for optimized AAR output with version naming
+- **Native Library Building**: Enhanced process with 16KB page alignment for Android 15+ compatibility
 
 ### 🗑️ **Removed**
-- **Airbridge Integration**: Completely removed Airbridge SDK dependency for simplified integration
-- **AppsFlyer Integration**: Completely removed AppsFlyer SDK dependency for simplified integration
+- **Deprecated Functions**: Cleaned up deprecated functions in GTrackingManager for cleaner API surface
 
-### 🔄 **Updated**
-- **SQLCipher Library**: Updated to v4.10.0 with 16KB page size compatibility
-- **Build Environment**: Updated to Gradle 8.7 and Android Gradle Plugin 8.5.1
-- **Google Policy Compliance**: Full support for new Google Play Store 16KB page size requirements
-- **ITS SDK**: Updated to latest v1.1.1 with enhanced analytics capabilities
+### 🐛 **Fixed**
+- **Unity SDK Bridge**: Fixed initialization issues for Unity integration
+- **Build Configuration**: Resolved issues when minifyEnabled is set to true in app build.gradle
 
-### 🔧 **Enhanced**
-- **16KB Page Size Compatibility**: Added support for Android 15+ requirements
-  - Future-proof native library building for upcoming Android devices
-  - Enhanced SQLCipher configuration with proper 16KB page alignment
-  - Optimized memory alignment and performance
-
-### 📋 **Configuration Updates**
-- **Gradle Properties**: Enhanced for 16KB page size compatibility
-- **Native Library Alignment**: Optimized for better performance and compatibility
+### ⚡ **Optimized**
+- **R8 Code Shrinking**: Enhanced code shrinking and obfuscation configuration for better performance and security
+- **ProGuard Rules**: Improved rules for enhanced code protection
+- **Native Library Alignment**: Optimized for improved performance on Android 15+ devices
+- **Build Process**: Faster compilation and build times
   
 ## Core Features
 ### 🔧 **System Requirements**
-- **Modern Build System**: Gradle 8.7, AGP 8.5.1, Java 17
+- **Modern Build System**: Gradle 8.*, AGP 8.* Java 17
 - **Latest Android**: Target SDK 35, Compile SDK 35
 - **Updated Dependencies**: Android Billing Client 7.0.0, Firebase latest versions
 - **ITS SDK 1.1.1**: Enhanced analytics and tracking capabilities
+- **AppsFlyer SDK**: Advanced attribution and analytics
 
 INSTALLATION
 ------------
@@ -61,7 +62,7 @@ allprojects {
 dependencies {
     // ...
     // google service (use firebase tracking & firebase analytic)
-    classpath 'com.android.tools.build:gradle:8.5.1'  // Updated for v1.1.0
+    classpath 'com.android.tools.build:gradle:8.5.1'  // Updated for v1.2.0
     classpath "com.google.protobuf:protobuf-gradle-plugin:0.9.4"
     classpath 'com.google.gms:google-services:4.4.2'
     classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
@@ -76,12 +77,12 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdk 35      // Updated for v1.1.0
+    compileSdk 35      // Updated for v1.2.0
     
     defaultConfig {
-        targetSdk 35   // Updated for v1.1.0
+        targetSdk 35   // Updated for v1.2.0
         minSdkVersion 26
-        versionName "1.1.0"
+        versionName "1.2.0"
         multiDexEnabled true
         ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'  // 16KB page size compatibility
         // ...
@@ -95,8 +96,8 @@ android {
 }
 
 dependencies {
-    // GameSDK & ITS SDK v1.1.0
-    implementation files('libs/gosusdk-v1.1.0.aar')
+    // GameSDK & ITS SDK v1.2.0
+    implementation files('libs/gosusdk-v1.2.0.aar')
     implementation files('libs/its_sdk-v1.1.1.aar')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     
@@ -112,8 +113,8 @@ dependencies {
     implementation "androidx.biometric:biometric:1.1.0"
     //remove airbridge
     //implementation "io.airbridge:sdk-android:2.22.2"
-    //remove appsflyer
-    //implementation 'com.appsflyer:af-android-sdk:6.3.2'
+    //AppsFlyer in v1.2.0
+    implementation 'com.appsflyer:af-android-sdk:6.3.2'
     implementation 'com.android.installreferrer:installreferrer:2.2'
     //for showLogin facebook sdk
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
@@ -132,7 +133,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.9.0'
     implementation("com.google.android.play:review:2.0.1")
     implementation 'androidx.core:core:1.10.1'
-    //update sqlcipher updated for v1.1.0
+    //update sqlcipher updated for v1.2.0
     //implementation "net.zetetic:sqlcipher-android:4.5.6@aar"
     implementation "net.zetetic:sqlcipher-android:4.10.0@aar"
     //
@@ -156,11 +157,11 @@ This file information will be sent separately by email by the product operator.
 {
   "client_id": "sample_value",
   "its_app_write_key": "sample_value",
-  "its_app_signing_key": "sample_value"
+  "its_app_signing_key": "sample_value",
 }
 ```
 
-**Note**: Airbridge configuration fields (`airb_app_name`, `airb_app_token`) have been removed in v1.1.0.
+**Note**: . Airbridge configuration fields (`airb_app_name`, `airb_app_token`) remain removed.
 
 #### 4. Edit Your Resources and Manifest
 **- Open the /app/res/values/strings.xml file.**
@@ -241,6 +242,10 @@ USAGE GOSU LOGIN SDK
 --------------------
 1. Initialize configuration for GosuSDK
 ---
+
+**⚠️ BREAKING CHANGE in v1.2.0**: The initialization method has been renamed from `initSdk()` to `sdkInitialize()` and now requires an `IGameInitListener` callback.
+
+##### : Initialization with SDKOptions (Configurable Tracking)
 ```java
     public class MainActivity extends AppCompatActivity {
         @Override
@@ -257,34 +262,24 @@ USAGE GOSU LOGIN SDK
                 @Override
                 public void onDeleteAccount(String status) {}
             });
-            /* Initialize GosuSDK */
-            GosuSDK.getInstance().initSdk(this);
-        }
-    }
-```
-##### Approach 2: Using Interface Implementation
-```java
-    public class MainActivity extends AppCompatActivity implements IGameOauthListener {
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            //...
-            /* Initialize authCallback delegate */
-            GosuSDK.getInstance().setOauthListener(this);
-            /* Initialize GosuSDK */
-            GosuSDK.getInstance().initSdk(this);
-        }
-        /* Delegate */
-        @Override
-        public void onLoginSuccess(String UserId, String UserName, String accesstoken) {
-        }    
-        @Override
-        public void onLogout() {
-        }    
-        @Override
-        public void onError() {
-        }    
-        @Override
-        public void onDeleteAccount(String status) {
+            
+            /* Configure SDK Options */
+            SDKOptions options = new SDKOptions();
+            options.enableITS = true;         // Enable ITS tracking (default: true)
+            options.enableAppsFlyer = true;   // Enable AppsFlyer tracking (default: true)
+            options.enableFirebase = true;    // Enable Firebase tracking (default: true)
+            
+            /* Initialize GosuSDK with options */
+            GosuSDK.getInstance().sdkInitialize(this, options, new IGameInitListener() {
+                @Override
+                public void onInitSuccess() {
+                    // SDK initialized successfully
+                }
+                @Override
+                public void onInitError(String error) {
+                    // Handle initialization error
+                }
+            });
         }
     }
 ```
@@ -296,13 +291,26 @@ USAGE GOSU LOGIN SDK
 ### 2. GosuSDK Basic Functions
 ---
 ```java
-//init SDK and show SignIn
-GosuSDK.getInstance().initSdk(this);
-//init SDK
-GosuSDK.getInstance().onlyInitSdk(this);
-//The result will return an IGameOauthListener delegate.
+//SDK initialization (required before any other SDK calls)
+GosuSDK.getInstance().sdkInitialize(this, new IGameInitListener() {
+    @Override
+    public void onInitSuccess() {
+        // SDK ready - can now call other functions
+    }
+    @Override
+    public void onInitError(String error) {
+        // Handle error
+    }
+});
+
+//Show SignIn dialog (call after successful initialization)
 GosuSDK.getInstance().showSignIn();
+//The result will return an IGameOauthListener delegate.
+
+//Logout current user
 GosuSDK.getInstance().logout();
+
+//Delete user account
 GosuSDK.getInstance().deleteAccount();
 ```
 ### 3. Make payments through Google Billing IAP for in-app purchases.
