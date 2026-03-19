@@ -237,6 +237,23 @@ Merge XML manifest
 <provider android:authorities="com.facebook.app.FacebookContentProvider116350609033094"
     android:name="com.facebook.FacebookContentProvider"
     android:exported="true"/>
+<activity
+    android:name="com.game.gsoauth.GoogleManager$SignInActivity"
+    android:screenOrientation="fullSensor"
+    tools:ignore="Instantiatable">
+</activity>
+<activity
+    android:name="com.game.gsoauth.FacebookManager$SignInActivity"
+    android:screenOrientation="fullSensor"
+    tools:ignore="Instantiatable">
+</activity>
+<service
+    android:name="com.game.gstracking.GFirebaseMessagingService"
+    android:exported="false">
+    <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT" />
+    </intent-filter>
+</service>
 ```
 USAGE GOSU LOGIN SDK
 --------------------
@@ -361,13 +378,14 @@ The SDK supports tracking in-app events with enhanced analytics capabilities (IT
 
 ```java
 // Basic tracking events
-GTrackingManager.getInstance().completeRegistration("User_id");
-GTrackingManager.getInstance().completeTutorial();
+GTrackingManager.getInstance().startTutorial("user_id", "char_id", "char_name", "server_info");
+GTrackingManager.getInstance().completeTutorial("user_id", "char_id", "char_name", "server_info");
 
 // Gaming-specific events  
 GTrackingManager.getInstance().createNewCharacter("server_info", "char_id", "char_name");
 GTrackingManager.getInstance().enterGame("user_id", "char_id", "char_name", "server_info");
 GTrackingManager.getInstance().levelUp("char_id", "server_info", level);
+GTrackingManager.getInstance().vipUp("char_id", "server_info", vip_level);
 
 // Custom events
 JSONObject customData = new JSONObject();
