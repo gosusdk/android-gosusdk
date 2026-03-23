@@ -114,7 +114,7 @@ dependencies {
     //remove airbridge
     //implementation "io.airbridge:sdk-android:2.22.2"
     //AppsFlyer in v1.2.0
-    implementation 'com.appsflyer:af-android-sdk:6.3.2'
+    implementation 'com.appsflyer:af-android-sdk:6.17.0'
     implementation 'com.android.installreferrer:installreferrer:2.2'
     //for showLogin facebook sdk
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
