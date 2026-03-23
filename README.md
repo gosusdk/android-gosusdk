@@ -175,19 +175,28 @@ This file information will be sent separately by email by the product operator.
 
 **-Add new  /app/src/main/res/xml/backup_rules_11.xml**
 ```xml
+<?xml version="1.0" encoding="utf-8"?>
 <full-backup-content>
-<exclude domain="sharedpref" path="its_prefs.xml"/>
-<exclude domain="sharedpref" path="rl_prefs.xml"/>
+  <exclude domain="sharedpref" path="its_prefs.xml"/>
+  <exclude domain="sharedpref" path="rl_prefs.xml"/>
+  <exclude domain="sharedpref" path="appsflyer-data"/>
 </full-backup-content>
 ```
 
 **-Add new  /app/src/main/res/xml/backup_rules_12.xml**
 ```xml
+<?xml version="1.0" encoding="utf-8"?>
 <data-extraction-rules>
-<cloud-backup>
-<exclude domain="sharedpref" path="its_prefs.xml"/>
-<exclude domain="sharedpref" path="rl_prefs.xml"/>
-</cloud-backup>
+  <cloud-backup>
+    <exclude domain="sharedpref" path="its_prefs.xml"/>
+    <exclude domain="sharedpref" path="rl_prefs.xml"/>
+    <exclude domain="sharedpref" path="appsflyer-data"/>
+  </cloud-backup>
+  <device-transfer>
+    <exclude domain="sharedpref" path="its_prefs.xml"/>
+    <exclude domain="sharedpref" path="rl_prefs.xml"/>
+    <exclude domain="sharedpref" path="appsflyer-data"/>
+  </device-transfer>
 </data-extraction-rules>
 ```
 
@@ -195,8 +204,8 @@ This file information will be sent separately by email by the product operator.
 ```xml
 Merge XML manifest
 <application
-        tools:replace = "android:fullBackupContent"
-        android:allowBackup = "true"
+        tools:replace="android:fullBackupContent,android:dataExtractionRules"
+        android:allowBackup="true"
         android:fullBackupContent="@xml/backup_rules_11"
         android:dataExtractionRules="@xml/backup_rules_12"
 />
