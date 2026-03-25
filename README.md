@@ -290,10 +290,10 @@ USAGE GOSU LOGIN SDK
             });
             
             /* Configure SDK Options */
-            SDKOptions options = new SDKOptions();
-            options.enableITS = true;         // Enable ITS tracking (default: false)
-            options.enableAppsFlyer = true;   // Enable AppsFlyer tracking (default: false)
-            options.enableFirebase = true;    // Enable Firebase tracking (default: false)
+            SDKOptions options = SDKOptions.builder()
+                                .enableAppsflyer(true)   // Enable AppsFlyer tracking (default: false)
+                                .enableFirebase(true)    // Enable Firebase tracking (default: false)
+                                .enableIts(true);        // Enable ITS tracking (default: false)
             
             /* Initialize GosuSDK with options */
             GosuSDK.getInstance().sdkInitialize(this, new IGameInitListener() {
@@ -319,10 +319,10 @@ USAGE GOSU LOGIN SDK
 ```java
 //SDK initialization (required before any other SDK calls)
 /* Configure SDK Options */
-SDKOptions options = new SDKOptions();
-options.enableITS = true;         // Enable ITS tracking (default: false)
-options.enableAppsFlyer = true;   // Enable AppsFlyer tracking (default: false)
-options.enableFirebase = true;    // Enable Firebase tracking (default: false)
+SDKOptions options = SDKOptions.builder()
+                    .enableAppsflyer(true)   // Enable AppsFlyer tracking (default: false)
+                    .enableFirebase(true)    // Enable Firebase tracking (default: false)
+                    .enableIts(true);        // Enable ITS tracking (default: false)
 
 /* Initialize GosuSDK with options */
 GosuSDK.getInstance().sdkInitialize(this, new IGameInitListener() {
