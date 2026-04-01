@@ -119,7 +119,7 @@ dependencies {
     //for showLogin facebook sdk
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
     //for in app billing
-    implementation 'com.android.billingclient:billing:7.0.0'
+    implementation 'com.android.billingclient:billing:8.0.0'
     implementation 'com.google.guava:guava:31.1-android'
     //for gson
     implementation 'com.google.code.gson:gson:2.10.1'
