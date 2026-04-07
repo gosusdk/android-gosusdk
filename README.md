@@ -1,7 +1,13 @@
-GosuSDK for Android v1.2.0
-========================
+GosuSDK for Android v1.2.1
+============================
 
 **Latest Gaming SDK with Enhanced Features**
+
+### 🐛 **Hotfix**
+- **Enhanced 16KB Page Size Support**: Fixed 16KB page size compliance for all native libraries across architectures (arm64-v8a, armeabi-v7a, x86, x86_64), enabling successful upload to Google Play Store.
+
+========================================================================
+GosuSDK for Android v1.2.0
 
 * Authentication & User Verification
 * Billing & Payment
